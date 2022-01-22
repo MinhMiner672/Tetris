@@ -11,3 +11,7 @@ A classic game written in Python using Pygame
 -   Press right or left arrow key to move either in right or left direction
 -   Press up arrow key to immediately very bottom of the screen
 -   Press space to rotate the block clockwise
+
+## 💻 Where to install the game?
+
+_Coming Soon_
