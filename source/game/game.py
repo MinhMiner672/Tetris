@@ -313,15 +313,16 @@ class Game:
         score_text_font.bold = True
         score_text_surf = score_text_font.render(
             'Score:', True, (255, 255, 255))
+        score_text_rect = score_text_surf.get_rect(center=(545, 400))
 
         score_number_font = pygame.font.Font(None, 50)
         score_number_font.bold = True
         scrore_number_text_surf = score_number_font.render(
             str(self.score), True, (255, 255, 255))
         scrore_number_text_rect = scrore_number_text_surf.get_rect(
-            center=(625, 470))
+            center=(615, 470))
 
-        self.screen.blit(score_text_surf, (560, 400))
+        self.screen.blit(score_text_surf, score_text_rect)
         self.screen.blit(scrore_number_text_surf, scrore_number_text_rect)
 
     def if_user_loses(self):
