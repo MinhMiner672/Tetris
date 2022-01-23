@@ -34,9 +34,7 @@ class Game:
         # self.screen.blit(self.background, (0, 0))
 
     def events(self):
-        """
-        Tracks all events in the game
-        """
+        """Tracks all events in the game"""
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -169,9 +167,7 @@ class Game:
                     cell.row_index += 1
 
     def draw_board(self):
-        """
-        Creates a board by using lines
-        """
+        """Creates a board by using lines"""
 
         # Draw columns
         for i in range(int(BOARD_SIZE_WIDTH / CELL_SIZE) + 1):
@@ -190,9 +186,7 @@ class Game:
         pygame.draw.line(self.screen, (255, 84, 158), (450, 0), (450, 675), 8)
 
     def create_block(self):
-        """
-        Creates a new block if there's not any block that is moveable
-        """
+        """Creates a new block if there's not any block that is moveable"""
 
         # If there's no next block, then add one
         if not self.next_block:
@@ -215,9 +209,7 @@ class Game:
             self.next_block.pop(0)
 
     def update_and_show_blocks(self):
-        """
-        Shows all cells in all blocks
-        """
+        """Shows all cells in all blocks"""
 
         self.all_blocks[0].block_constraint(self.board)
         self.all_blocks[0].cell_grp.update()
@@ -282,9 +274,7 @@ class Game:
                         cell.move('down', len(rows_to_remove))
 
     def show_next_block(self):
-        """
-        Shows what the next block is 
-        """
+        """Shows what the next block is"""
 
         next_block_text_font = pygame.font.Font(None, 50)
         next_block_text_font.bold = True
@@ -305,9 +295,7 @@ class Game:
         self.next_block[1].cell_grp.draw(self.screen)
 
     def show_score(self):
-        """
-        Shows the current score
-        """
+        """Shows the current score"""
 
         score_text_font = pygame.font.Font(None, 55)
         score_text_font.bold = True
