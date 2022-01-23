@@ -1,8 +1,6 @@
-from this import d
 import pygame
 from .cell import Cell
 from .constants import *
-from random import randint
 
 
 class Block:
