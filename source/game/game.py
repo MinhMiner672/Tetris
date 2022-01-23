@@ -313,7 +313,7 @@ class Game:
         score_text_font.bold = True
         score_text_surf = score_text_font.render(
             'Score:', True, (255, 255, 255))
-        score_text_rect = score_text_surf.get_rect(center=(545, 400))
+        score_text_rect = score_text_surf.get_rect(center=(615, 400))
 
         score_number_font = pygame.font.Font(None, 50)
         score_number_font.bold = True
