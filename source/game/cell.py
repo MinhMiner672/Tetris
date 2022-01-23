@@ -48,6 +48,8 @@ class Cell(pygame.sprite.Sprite):
             self.rect.x -= 45
 
     def update(self):
+        """Always updates the cell as soon as its index gets updated"""
+
         if self.column_index < 0:
             self.column_index = 0
         if self.column_index > 9:
