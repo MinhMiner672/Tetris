@@ -12,6 +12,8 @@ class Game:
         self.screen = pygame.display.set_mode((WIDTH, HEIGHT))
         self.clock = pygame.time.Clock()
         pygame.display.set_caption("Tetris")
+        pygame.display.set_icon(
+            pygame.image.load('./icon.ico').convert_alpha())
 
         # All blocks in the game
         self.all_blocks = []
@@ -300,7 +302,7 @@ class Game:
     def show_next_block(self):
         """Shows what the next block is"""
 
-        next_block_text_font = pygame.font.Font(None, 50)
+        next_block_text_font = pygame.font.SysFont('Arial', 40)
         next_block_text_font.bold = True
         next_block_text_surf = next_block_text_font.render(
             'Next Block:', True, (255, 255, 255))
@@ -321,13 +323,13 @@ class Game:
     def show_score(self):
         """Shows the current score"""
 
-        score_text_font = pygame.font.Font(None, 55)
+        score_text_font = pygame.font.SysFont('Arial', 50)
         score_text_font.bold = True
         score_text_surf = score_text_font.render(
             'Score:', True, (255, 255, 255))
         score_text_rect = score_text_surf.get_rect(center=(615, 400))
 
-        score_number_font = pygame.font.Font(None, 50)
+        score_number_font = pygame.font.SysFont('Arial', 45)
         score_number_font.bold = True
         scrore_number_text_surf = score_number_font.render(
             str(self.score), True, (255, 255, 255))
@@ -348,7 +350,7 @@ class Game:
                         self.game_over = True
 
     def show_game_over(self):
-        game_over_text_font = pygame.font.Font(None, 100)
+        game_over_text_font = pygame.font.SysFont('Arial', 100)
         game_over_text_surf = game_over_text_font.render(
             'YOU LOST!', True, (255, 255, 255))
         game_over_text_rect = game_over_text_surf.get_rect(
