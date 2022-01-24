@@ -260,6 +260,9 @@ class Game:
         else:
             return
 
+        get_points_sound = pygame.mixer.Sound('./sound/points.wav')
+        get_points_sound.play()
+
         # This list contains all row indexes which indicate full rows
         rows_to_remove = []
 
