@@ -18,6 +18,8 @@ if __name__ == "__main__":
 
             main_game.get_points()
 
+            main_game.show_blocks_preview()
+
             main_game.show_next_block()
             main_game.show_score()
 

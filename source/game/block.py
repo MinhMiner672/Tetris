@@ -317,3 +317,15 @@ class Block:
 
         self.cell_grp.draw(pygame.display.get_surface())
         self.cell_grp.update()
+
+    def show_preview(self, start_x_pos, start_y_pos):
+        """Shows a preview of where the block will be placed"""
+
+        pygame.draw.line(pygame.display.get_surface(), (110, 221, 224),
+                         (start_x_pos, start_y_pos), (start_x_pos + 45, start_y_pos))
+        pygame.draw.line(pygame.display.get_surface(), (110, 221, 224),
+                         (start_x_pos + 45, start_y_pos), (start_x_pos + 45, start_y_pos + 45))
+        pygame.draw.line(pygame.display.get_surface(), (110, 221, 224),
+                         (start_x_pos + 45, start_y_pos + 45), (start_x_pos, start_y_pos + 45))
+        pygame.draw.line(pygame.display.get_surface(), (110, 221, 224),
+                         (start_x_pos, start_y_pos + 45), (start_x_pos, start_y_pos))

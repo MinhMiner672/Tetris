@@ -31,7 +31,6 @@ class Game:
 
     def fill_screen(self):
         self.screen.fill((51, 51, 51))
-        # self.screen.blit(self.background, (0, 0))
 
     def events(self):
         """Tracks all events in the game"""
@@ -184,6 +183,28 @@ class Game:
         # Draw borders of the main game board
         pygame.draw.line(self.screen, (255, 84, 158), (0, 0), (450, 0), 15)
         pygame.draw.line(self.screen, (255, 84, 158), (450, 0), (450, 675), 8)
+
+    def show_blocks_preview(self):
+        # Get the minimum distance
+        cell_distances = []
+        for cell_sprite in self.all_blocks[0].cell_grp.sprites():
+            for row_index in range(cell_sprite.row_index, 15):
+                if self.board[row_index][cell_sprite.column_index] == 1:
+                    cell_distances.append(
+                        row_index - cell_sprite.row_index - 1
+                    )
+                    break
+            else:
+                cell_distances.append(
+                    14 - cell_sprite.row_index)
+                continue
+
+        min_distance = min(cell_distances)
+
+        # Shows preview
+        for cell in self.all_blocks[0].cell_grp.sprites():
+            self.all_blocks[0].show_preview(
+                45 * cell.column_index, 45 * (cell.row_index + min_distance))
 
     def create_block(self):
         """Creates a new block if there's not any block that is moveable"""
