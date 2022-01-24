@@ -16,4 +16,4 @@ A classic game written in Python using Pygame
 
 1. Install the `Zip` file at **installation** folder of this repository
 2. Unzip the file and then run `main.exe`
-3. Enojoy the game!
+3. Enjoy the game!
