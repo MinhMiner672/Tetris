@@ -12,8 +12,7 @@ class Game:
         self.screen = pygame.display.set_mode((WIDTH, HEIGHT))
         self.clock = pygame.time.Clock()
         pygame.display.set_caption("Tetris")
-        pygame.display.set_icon(
-            pygame.image.load('./icon.ico').convert_alpha())
+        pygame.display.set_icon(pygame.image.load("./icon.ico").convert_alpha())
 
         # All blocks in the game
         self.all_blocks = []
@@ -116,14 +115,16 @@ class Game:
                             cell_distances = []
                             for cell_sprite in self.all_blocks[0].cell_grp.sprites():
                                 for row_index in range(cell_sprite.row_index, 15):
-                                    if self.board[row_index][cell_sprite.column_index] == 1:
+                                    if (
+                                        self.board[row_index][cell_sprite.column_index]
+                                        == 1
+                                    ):
                                         cell_distances.append(
                                             row_index - cell_sprite.row_index - 1
                                         )
                                         break
                                 else:
-                                    cell_distances.append(
-                                        14 - cell_sprite.row_index)
+                                    cell_distances.append(14 - cell_sprite.row_index)
                                     continue
 
                             for cell_sprite in self.all_blocks[0].cell_grp.sprites():
@@ -133,15 +134,14 @@ class Game:
 
                         if event.key == pygame.K_SPACE:
                             if self.all_blocks[0].moveable:
-                                self.all_blocks[0].rotate()
+                                self.all_blocks[0].rotate(self.board)
 
-                 # Otherwise
+                # Otherwise
                 else:
                     # If the space key is pressed
                     if event.key == pygame.K_SPACE:
                         # Create a brand new board
-                        self.board = [
-                            [0 for _ in range(10)] for _ in range(15)]
+                        self.board = [[0 for _ in range(10)] for _ in range(15)]
 
                         self.game_over = False
 
@@ -172,14 +172,14 @@ class Game:
 
         # Draw columns
         for i in range(int(BOARD_SIZE_WIDTH / CELL_SIZE) + 1):
-            pygame.draw.line(self.screen, (74, 74, 74),
-                             (45 * i, 0), (45 * i, HEIGHT), 1)
+            pygame.draw.line(
+                self.screen, (74, 74, 74), (45 * i, 0), (45 * i, HEIGHT), 1
+            )
 
         # Draw rows
         for i in range(int(BOARD_SIZE_HEIGHT / CELL_SIZE) + 1):
             pygame.draw.line(
-                self.screen, (74, 74, 74), (0, 45 *
-                                            i), (BOARD_SIZE_WIDTH, 45 * i), 1
+                self.screen, (74, 74, 74), (0, 45 * i), (BOARD_SIZE_WIDTH, 45 * i), 1
             )
 
         # Draw borders of the main game board
@@ -192,13 +192,10 @@ class Game:
         for cell_sprite in self.all_blocks[0].cell_grp.sprites():
             for row_index in range(cell_sprite.row_index, 15):
                 if self.board[row_index][cell_sprite.column_index] == 1:
-                    cell_distances.append(
-                        row_index - cell_sprite.row_index - 1
-                    )
+                    cell_distances.append(row_index - cell_sprite.row_index - 1)
                     break
             else:
-                cell_distances.append(
-                    14 - cell_sprite.row_index)
+                cell_distances.append(14 - cell_sprite.row_index)
                 continue
 
         min_distance = min(cell_distances)
@@ -206,15 +203,17 @@ class Game:
         # Shows preview
         for cell in self.all_blocks[0].cell_grp.sprites():
             self.all_blocks[0].show_preview(
-                45 * cell.column_index, 45 * (cell.row_index + min_distance))
+                45 * cell.column_index, 45 * (cell.row_index + min_distance)
+            )
 
     def create_block(self):
         """Creates a new block if there's not any block that is moveable"""
 
         # If there's no next block, then add one
         if not self.next_block:
-            new_block = Block(type=choice(
-                ['S', 'Z', 'S', 'Z', 'L', 'J', 'L', 'J', 'T', 'O', 'I']))
+            new_block = Block(
+                type=choice(["S", "Z", "S", "Z", "L", "J", "L", "J", "T", "O", "I"])
+            )
 
             # We add new_block 2 times
             # the first block is used for moveable block
@@ -252,7 +251,7 @@ class Game:
 
     def get_points(self):
         """
-        User will get a certain amount of points if one or more rows 
+        User will get a certain amount of points if one or more rows
         is completely full
         """
 
@@ -262,7 +261,7 @@ class Game:
         else:
             return
 
-        get_points_sound = pygame.mixer.Sound('./sound/points.wav')
+        get_points_sound = pygame.mixer.Sound("./sound/points.wav")
         get_points_sound.play()
 
         # This list contains all row indexes which indicate full rows
@@ -297,19 +296,20 @@ class Game:
             if not block.moveable:
                 for cell in block.cell_grp.sprites():
                     if cell.row_index <= rows_to_remove[-1]:
-                        cell.move('down', len(rows_to_remove))
+                        cell.move("down", len(rows_to_remove))
 
     def show_next_block(self):
         """Shows what the next block is"""
 
-        next_block_text_font = pygame.font.SysFont('Arial', 40)
+        next_block_text_font = pygame.font.SysFont("Arial", 40)
         next_block_text_font.bold = True
         next_block_text_surf = next_block_text_font.render(
-            'Next Block:', True, (255, 255, 255))
+            "Next Block:", True, (255, 255, 255)
+        )
         self.screen.blit(next_block_text_surf, (510, 50))
 
         try:
-            if not hasattr(self.next_block[1], 'show_only'):
+            if not hasattr(self.next_block[1], "show_only"):
                 self.next_block[1].show_only = True
 
                 for cell in self.next_block[1].cell_grp.sprites():
@@ -323,18 +323,17 @@ class Game:
     def show_score(self):
         """Shows the current score"""
 
-        score_text_font = pygame.font.SysFont('Arial', 50)
+        score_text_font = pygame.font.SysFont("Arial", 50)
         score_text_font.bold = True
-        score_text_surf = score_text_font.render(
-            'Score:', True, (255, 255, 255))
+        score_text_surf = score_text_font.render("Score:", True, (255, 255, 255))
         score_text_rect = score_text_surf.get_rect(center=(615, 400))
 
-        score_number_font = pygame.font.SysFont('Arial', 45)
+        score_number_font = pygame.font.SysFont("Arial", 45)
         score_number_font.bold = True
         scrore_number_text_surf = score_number_font.render(
-            str(self.score), True, (255, 255, 255))
-        scrore_number_text_rect = scrore_number_text_surf.get_rect(
-            center=(615, 470))
+            str(self.score), True, (255, 255, 255)
+        )
+        scrore_number_text_rect = scrore_number_text_surf.get_rect(center=(615, 470))
 
         self.screen.blit(score_text_surf, score_text_rect)
         self.screen.blit(scrore_number_text_surf, scrore_number_text_rect)
@@ -350,11 +349,13 @@ class Game:
                         self.game_over = True
 
     def show_game_over(self):
-        game_over_text_font = pygame.font.SysFont('Arial', 100)
+        game_over_text_font = pygame.font.SysFont("Arial", 100)
         game_over_text_surf = game_over_text_font.render(
-            'YOU LOST!', True, (255, 255, 255))
+            "YOU LOST!", True, (255, 255, 255)
+        )
         game_over_text_rect = game_over_text_surf.get_rect(
-            center=(int(WIDTH / 2), int(HEIGHT / 2)))
+            center=(int(WIDTH / 2), int(HEIGHT / 2))
+        )
         self.screen.blit(game_over_text_surf, game_over_text_rect)
 
     def update_frame(self):
