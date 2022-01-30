@@ -16,7 +16,7 @@ class Block:
         self.center_cell_index = 0
 
         self.cell_outside_center_index = None
-        self.cell_outside_center_state = ''
+        self.cell_outside_center_state = ""
 
         # If the block (one of its cells) touches another cell or reaches
         # the bottom border of the board
@@ -48,8 +48,7 @@ class Block:
             self.center_cell_index = 2
             self.cell_grp.add(Cell("purple", 0, first_cell_col_index))
             self.cell_grp.add(Cell("purple", 1, first_cell_col_index - 1))
-            self.cell_grp.add(
-                Cell("purple", 1, first_cell_col_index))  # center
+            self.cell_grp.add(Cell("purple", 1, first_cell_col_index))  # center
             self.cell_grp.add(Cell("purple", 1, first_cell_col_index + 1))
 
         if self.type == "S":
@@ -57,7 +56,7 @@ class Block:
 
             self.cell_outside_center_index = 2
 
-            self.cell_outside_center_state = 'down_2'
+            self.cell_outside_center_state = "down_2"
 
             self.cell_grp.add(Cell("green", 0, first_cell_col_index))  # center
             self.cell_grp.add(Cell("green", 0, first_cell_col_index + 1))
@@ -70,7 +69,7 @@ class Block:
 
             self.cell_outside_center_index = 3
 
-            self.cell_outside_center_state = 'down_1'
+            self.cell_outside_center_state = "down_1"
 
             self.cell_grp.add(Cell("red", 0, first_cell_col_index - 1))
             self.cell_grp.add(Cell("red", 0, first_cell_col_index))  # center
@@ -91,11 +90,10 @@ class Block:
 
             self.cell_outside_center_index = 3
 
-            self.cell_outside_center_state = 'up_2'
+            self.cell_outside_center_state = "up_2"
 
             self.cell_grp.add(Cell("cyan", 0, first_cell_col_index))
-            self.cell_grp.add(
-                Cell("cyan", 0, first_cell_col_index + 1))  # center
+            self.cell_grp.add(Cell("cyan", 0, first_cell_col_index + 1))  # center
             self.cell_grp.add(Cell("cyan", 0, first_cell_col_index + 2))
             self.cell_grp.add(Cell("cyan", 0, first_cell_col_index + 3))
 
@@ -103,28 +101,26 @@ class Block:
             self.center_cell_index = 2
 
             self.cell_outside_center_index = 0
-            self.cell_outside_center_state = 'up_1'
+            self.cell_outside_center_state = "up_1"
 
             # first_cell_col_index = randint(5, 5)
             first_cell_col_index = 3
             self.cell_grp.add(Cell("blue", 0, first_cell_col_index))
             self.cell_grp.add(Cell("blue", 1, first_cell_col_index))
-            self.cell_grp.add(
-                Cell("blue", 1, first_cell_col_index + 1))  # center
+            self.cell_grp.add(Cell("blue", 1, first_cell_col_index + 1))  # center
             self.cell_grp.add(Cell("blue", 1, first_cell_col_index + 2))
 
         if self.type == "L":
             self.center_cell_index = 2
 
             self.cell_outside_center_index = 0
-            self.cell_outside_center_state = 'up_2'
+            self.cell_outside_center_state = "up_2"
 
             # first_cell_col_index = randint(3, 5)
             first_cell_col_index = 5
             self.cell_grp.add(Cell("orange", 0, first_cell_col_index))
             self.cell_grp.add(Cell("orange", 1, first_cell_col_index))
-            self.cell_grp.add(
-                Cell("orange", 1, first_cell_col_index - 1))  # center
+            self.cell_grp.add(Cell("orange", 1, first_cell_col_index - 1))  # center
             self.cell_grp.add(Cell("orange", 1, first_cell_col_index - 2))
 
     def block_constraint(self, board: list):
@@ -137,12 +133,12 @@ class Block:
             # If one of the cell of the block reaches the last row
             # or reaches other cells
 
-            if (
-                cell.row_index == 14
-                or board[cell.row_index + 1][cell.column_index] == 1
-            ):
-                cell_that_touches = cell
+            if cell.row_index == 14:
                 self.touch_bottom = True
+                cell_that_touches = cell
+            elif board[cell.row_index + 1][cell.column_index] == 1:
+                self.touch_bottom = True
+                cell_that_touches = cell
             else:
                 continue
 
@@ -154,7 +150,15 @@ class Block:
                 # While self.touch_bottom is True, if the block that touched something before has not touched anything so far
                 # then reset the start_ticks, set self.touch_bottom to False
                 try:
-                    if not board[cell_that_touches.row_index + 1][cell_that_touches.column_index] == 1 and not int(str(pygame.time.get_ticks())[:-3]) - int(self.start_ticks) == 2:
+                    if (
+                        not board[cell_that_touches.row_index + 1][
+                            cell_that_touches.column_index
+                        ]
+                        == 1
+                        and not int(str(pygame.time.get_ticks())[:-3])
+                        - int(self.start_ticks)
+                        == 2
+                    ):
                         self.start_ticks = 0
                         self.touch_bottom = False
                         cell_that_touches = None
@@ -169,9 +173,9 @@ class Block:
 
                 return
 
-    def rotate(self):
+    def rotate(self, board: list):
         # if the block type is "O", which is unnecessary to rotate
-        if self.type == 'O':
+        if self.type == "O":
             return
 
         def next_to_the_center_cell(center_pos: tuple, block_pos: tuple) -> bool:
@@ -228,38 +232,38 @@ class Block:
                 continue
 
             if self.cell_grp.sprites().index(cell) == self.cell_outside_center_index:
-                if self.cell_outside_center_state == 'down_1':
-                    if self.type == 'I':
+                if self.cell_outside_center_state == "down_1":
+                    if self.type == "I":
                         cell.column_index -= 2
                         cell.row_index -= 2
                     else:
                         cell.column_index -= 2
 
-                    self.cell_outside_center_state = 'down_2'
+                    self.cell_outside_center_state = "down_2"
 
-                elif self.cell_outside_center_state == 'down_2':
-                    if self.type == 'I':
+                elif self.cell_outside_center_state == "down_2":
+                    if self.type == "I":
                         cell.row_index -= 2
                         cell.column_index += 2
                     else:
                         cell.row_index -= 2
 
-                    self.cell_outside_center_state = 'up_1'
+                    self.cell_outside_center_state = "up_1"
 
-                elif self.cell_outside_center_state == 'up_1':
-                    if self.type == 'I':
+                elif self.cell_outside_center_state == "up_1":
+                    if self.type == "I":
                         cell.column_index += 2
                         cell.row_index += 2
                     else:
                         cell.column_index += 2
-                    self.cell_outside_center_state = 'up_2'
-                elif self.cell_outside_center_state == 'up_2':
-                    if self.type == 'I':
+                    self.cell_outside_center_state = "up_2"
+                elif self.cell_outside_center_state == "up_2":
+                    if self.type == "I":
                         cell.row_index += 2
                         cell.column_index -= 2
                     else:
                         cell.row_index += 2
-                    self.cell_outside_center_state = 'down_1'
+                    self.cell_outside_center_state = "down_1"
 
                 continue
 
@@ -275,8 +279,7 @@ class Block:
             # Check if the current cell is next to the center cell
             if next_to_the_center_cell(center_cell_pos, cell_pos):
                 # identify the direction of the current cell
-                dir_iden_result = direction_identification(
-                    center_cell_pos, cell_pos)
+                dir_iden_result = direction_identification(center_cell_pos, cell_pos)
 
                 if dir_iden_result == "right":
                     cell.row_index += 1
@@ -296,6 +299,11 @@ class Block:
 
         # If a cell in the block is outside the board
         for cell in self.cell_grp.sprites():
+            # After rotation if one of the cells position has been occupied by another cell
+            if board[cell.row_index][cell.column_index] == 1:
+                for cell in self.cell_grp.sprites():
+                    cell.row_index -= 1
+
             if cell.row_index < 0:
                 # Move the block down
                 for cell in self.cell_grp.sprites():
@@ -321,11 +329,27 @@ class Block:
     def show_preview(self, start_x_pos, start_y_pos):
         """Shows a preview of where the block will be placed"""
 
-        pygame.draw.line(pygame.display.get_surface(), (110, 221, 224),
-                         (start_x_pos, start_y_pos), (start_x_pos + 45, start_y_pos))
-        pygame.draw.line(pygame.display.get_surface(), (110, 221, 224),
-                         (start_x_pos + 45, start_y_pos), (start_x_pos + 45, start_y_pos + 45))
-        pygame.draw.line(pygame.display.get_surface(), (110, 221, 224),
-                         (start_x_pos + 45, start_y_pos + 45), (start_x_pos, start_y_pos + 45))
-        pygame.draw.line(pygame.display.get_surface(), (110, 221, 224),
-                         (start_x_pos, start_y_pos + 45), (start_x_pos, start_y_pos))
+        pygame.draw.line(
+            pygame.display.get_surface(),
+            (110, 221, 224),
+            (start_x_pos, start_y_pos),
+            (start_x_pos + 45, start_y_pos),
+        )
+        pygame.draw.line(
+            pygame.display.get_surface(),
+            (110, 221, 224),
+            (start_x_pos + 45, start_y_pos),
+            (start_x_pos + 45, start_y_pos + 45),
+        )
+        pygame.draw.line(
+            pygame.display.get_surface(),
+            (110, 221, 224),
+            (start_x_pos + 45, start_y_pos + 45),
+            (start_x_pos, start_y_pos + 45),
+        )
+        pygame.draw.line(
+            pygame.display.get_surface(),
+            (110, 221, 224),
+            (start_x_pos, start_y_pos + 45),
+            (start_x_pos, start_y_pos),
+        )

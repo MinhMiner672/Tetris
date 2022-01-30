@@ -3,7 +3,7 @@ import pygame
 
 pygame.init()
 
-bg_music = pygame.mixer.Sound('./sound/music.mp3')
+bg_music = pygame.mixer.Sound("./sound/music.mp3")
 bg_music.play(loops=-1)
 
 if __name__ == "__main__":
